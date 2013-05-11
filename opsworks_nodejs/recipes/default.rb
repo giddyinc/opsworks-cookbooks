@@ -1,20 +1,17 @@
 case node[:platform]
 when 'debian', 'ubuntu'
-  remote_file "/tmp/#{node[:opsworks_nodejs][:deb]}" do
-    source node[:opsworks_nodejs][:deb_url]
-    action :create_if_missing
-    not_if do
-      ::File.exists?("/usr/local/bin/node") &&
-      system("/usr/local/bin/node -v | grep -q '#{node[:opsworks_nodejs][:version]}'")
-    end
-  end
-
   execute "Install node.js #{node[:opsworks_nodejs][:version]}" do
+    command "apt-get update"
+    command "apt-get install python-software-properties python g++ make"
+    command "add-apt-repository ppa:chris-lea/node.js"
+    command "apt-get update"
+    command "apt-get install nodejs"
+
     cwd "/tmp"
     command "dpkg -i /tmp/#{node[:opsworks_nodejs][:deb]}"
 
-    only_if do
-      ::File.exists?("/tmp/#{node[:opsworks_nodejs][:deb]}")
+    not_if do
+      ::File.exists?("/usr/local/bin/node")
     end
   end
 
