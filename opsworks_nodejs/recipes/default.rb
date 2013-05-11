@@ -1,7 +1,7 @@
 case node[:platform]
 when 'debian', 'ubuntu'
   execute "Install node.js #{node[:opsworks_nodejs][:version]}" do
-    command "apt-get update; apt-get install python-software-properties python g++ make; add-apt-repository ppa:chris-lea/node.js; apt-get update; apt-get install nodejs"
+    command "apt-get update; apt-get -y install python-software-properties python g++ make; add-apt-repository -y ppa:chris-lea/node.js; apt-get update; apt-get -y install nodejs"
 
     not_if do
       ::File.exists?("/usr/local/bin/node")
