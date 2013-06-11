@@ -10,6 +10,7 @@ node[:deploy].each do |application, deploy|
     path deploy[:deploy_to]
   end
 
+  deploy[:symlink_before_migrate] = { "node_modules" => "node_modules" }
   opsworks_deploy do
     deploy_data deploy
     app application
