@@ -8,9 +8,10 @@ node[:deploy].each do |application, deploy|
     user deploy[:user]
     group deploy[:group]
     path deploy[:deploy_to]
+    shared_dirs 'node_modules'
   end
 
-  deploy[:symlink_before_migrate] = { "node_modules" => "node_modules" }
+  deploy[:symlink_before_migrate] = { 'node_modules' => 'node_modules' }
   opsworks_deploy do
     deploy_data deploy
     app application
