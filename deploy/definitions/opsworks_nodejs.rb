@@ -26,6 +26,11 @@ define :opsworks_nodejs do
     nodejs_env = "NODE_ENV=#{node[:nodejs_env]}"
   end
 
+  app_main = "server.js"
+  unless node[:app_main].nil?
+    app_main = "#{node[:app_main]}"
+  end
+
   template "#{node[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
     source 'node_web_app.monitrc.erb'
     cookbook 'opsworks_nodejs'
@@ -35,7 +40,7 @@ define :opsworks_nodejs do
     variables(
       :deploy => deploy,
       :application_name => application,
-      :monitored_script => "#{deploy[:deploy_to]}/current/server.js",
+      :monitored_script => "#{deploy[:deploy_to]}/current/#{app_main}",
       :nodejs_env => nodejs_env
     )
     notifies :restart, resources(:service => 'monit'), :immediately
