@@ -2,8 +2,8 @@ include_attribute 'deploy'
 
 default[:boxed][:assets_url] = 'https://s3.amazonaws.com/boxed-packages'
 
-default[:opsworks_nodejs][:version] = '0.10.5'
-set[:opsworks_nodejs][:version] = '0.10.5'
+default[:opsworks_nodejs][:version] = '0.10.21'
+set[:opsworks_nodejs][:version] = '0.10.21'
 
 default[:opsworks_nodejs][:pkgrelease] = '1'
 
