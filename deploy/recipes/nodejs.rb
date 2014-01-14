@@ -11,6 +11,7 @@ node[:deploy].each do |application, deploy|
     shared_dirs 'node_modules'
   end
 
+  deploy[:purge_before_symlink] = {"system" => "public/system", "pids" => "tmp/pids", "log" => "log", "node_modules" => "node_modules"}
   deploy[:symlinks] = {"system" => "public/system", "pids" => "tmp/pids", "log" => "log", "node_modules" => "node_modules"}
   opsworks_deploy do
     deploy_data deploy

@@ -70,6 +70,7 @@ define :opsworks_deploy do
       environment deploy[:environment]
       symlink_before_migrate( deploy[:symlink_before_migrate] )
       symlinks( deploy[:symlinks] )
+      purge_before_symlink( deploy[:purge_before_symlink] )
       action deploy[:action]
 
       if deploy[:application_type] == 'rails'
