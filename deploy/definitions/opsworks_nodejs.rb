@@ -23,12 +23,12 @@ define :opsworks_nodejs do
 
   nodejs_env = ""
   unless node[:nodejs_env].nil?
-    nodejs_env = "NODE_ENV=#{node[:nodejs_env]}"
+    nodejs_env = "NODE_ENV=#{node.default[:nodejs_env]}"
   end
 
   app_main = "server.js"
   unless node[:app_main].nil?
-    app_main = "#{node[:app_main]}"
+    app_main = "#{node.default[:app_main]}"
   end
 
   template "#{node.default[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
