@@ -31,7 +31,7 @@ define :opsworks_nodejs do
     app_main = "#{node[:app_main]}"
   end
 
-  template "#{node[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
+  template "#{node.default[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
     source 'node_web_app.monitrc.erb'
     cookbook 'opsworks_nodejs'
     owner 'root'
