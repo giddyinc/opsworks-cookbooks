@@ -13,8 +13,8 @@ node[:deploy].each do |application, deploy|
     shared_dirs 'node_modules'
   end
 
-  deploy.default[:purge_before_symlink] = %w{log tmp/pids public/system node_modules}
-  deploy.default[:symlinks] = {"system" => "public/system", "pids" => "tmp/pids", "log" => "log", "node_modules" => "node_modules"}
+  # deploy.default[:purge_before_symlink] = %w{log tmp/pids public/system node_modules}
+ #  deploy.default[:symlinks] = {"system" => "public/system", "pids" => "tmp/pids", "log" => "log", "node_modules" => "node_modules"}
   opsworks_deploy do
     deploy_data deploy
     app application
