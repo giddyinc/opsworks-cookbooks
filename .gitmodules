@@ -7,3 +7,6 @@
 [submodule "newrelic"]
 	path = newrelic
 	url = https://github.com/escapestudios-cookbooks/newrelic.git
+[submodule "ark"]
+	path = ark
+	url = https://github.com/opscode-cookbooks/ark.git
