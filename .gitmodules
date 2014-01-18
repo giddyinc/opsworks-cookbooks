@@ -4,3 +4,6 @@
 [submodule "ant"]
 	path = ant
 	url = https://github.com/opscode-cookbooks/ant.git
+[submodule "newrelic"]
+	path = newrelic
+	url = https://github.com/escapestudios-cookbooks/newrelic.git
