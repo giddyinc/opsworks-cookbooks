@@ -10,3 +10,6 @@
 [submodule "ark"]
 	path = ark
 	url = https://github.com/opscode-cookbooks/ark.git
+[submodule "java"]
+	path = java
+	url = https://github.com/socrata-cookbooks/java.git
