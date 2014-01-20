@@ -16,3 +16,6 @@
 [submodule "build-essential"]
 	path = build-essential
 	url = https://github.com/opscode-cookbooks/build-essential.git
+[submodule "loggly"]
+	path = loggly
+	url = https://github.com/kdaniels/loggly-rsyslog.git
