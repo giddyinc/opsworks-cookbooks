@@ -84,5 +84,5 @@ $InputRunFileMonitor
 $template LogglyFormat,"<%%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [<%= node[:loggly][:token] %>@41058] %msg%\n"
 
 
-@@logs-01.loggly.com:514;LogglyFormat
+*.* @@logs-01.loggly.com:514;LogglyFormat
 
