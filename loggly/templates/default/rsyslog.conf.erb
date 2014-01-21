@@ -45,8 +45,8 @@ $FileGroup adm
 $FileCreateMode 0640
 $DirCreateMode 0755
 $Umask 0022
-$PrivDropToUser syslog
-$PrivDropToGroup syslog
+#$PrivDropToUser syslog
+#$PrivDropToGroup syslog
 
 #
 # Where to place spool files
@@ -80,6 +80,15 @@ $InputRunFileMonitor
 
 
 # forward to loggly: <%= node[:loggly][:dashboard_url] %>
-$template LogglyFormat,"<%%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [<%= node[:loggly][:token] %>] %msg%\n"
+$template LogglyFormat,"<%%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [<%= node[:loggly][:token] %>@41058] %msg%\n"
 
-*.* @@logs-01.loggly.com:514; LogglyFormat
+<% node[:loggly][:logfiles].each do |logfile| %>
+$InputFileName <%= logfile[:filename] %>
+$InputFileTag <%= logfile[:tag] %>:
+$InputFileStateFile <%= logfile[:statefile] %>
+$InputRunFileMonitor
+
+<% end %>
+
+@@logs-01.loggly.com:514;LogglyFormat
+
