@@ -61,7 +61,7 @@ define :opsworks_deploy do
 
   # setup deployment & checkout
   if deploy[:scm] && deploy[:scm][:scm_type] != 'other'
-    Chef::Log.debug("Checking out source code of application #{application} with type #{deploy[:application_type]}")
+    Chef::Log.debug("Checking out source code of application #{application} with type #{deploy[:application_type]} and symlinks: #{deploy[:symlinks]}")
     deploy deploy[:deploy_to] do
       repository deploy[:scm][:repository]
       user deploy[:user]
