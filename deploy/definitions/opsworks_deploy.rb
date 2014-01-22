@@ -61,7 +61,7 @@ define :opsworks_deploy do
 
   # setup deployment & checkout
   if deploy[:scm] && deploy[:scm][:scm_type] != 'other'
-    Chef::Log.debug("Checking out source code of application #{application} with type #{deploy[:application_type]} and symlinks: #{deploy[:symlinks]}")
+    Chef::Log.debug("Checking out source code of application #{application} with type #{deploy[:application_type]}")
     deploy deploy[:deploy_to] do
       repository deploy[:scm][:repository]
       user deploy[:user]
@@ -70,9 +70,17 @@ define :opsworks_deploy do
       migrate deploy[:migrate]
       migration_command deploy[:migrate_command]
       environment deploy[:environment].to_hash
-      symlink_before_migrate( deploy[:symlink_before_migrate] )
-      symlinks( deploy[:symlinks] )
-      purge_before_symlink( deploy[:purge_before_symlink] )
+      symlink_before_migrate( deploy[:symlink_before_migrate] )      
+      if deploy[:application_type] == 'nodejs'
+        Chef::Log.debug("Node JS app, overriding symlinks and purge before symlink...")
+        symlinks( {"system" => "public/system", "pids" => "tmp/pids", "log" => "log", "node_modules" => "node_modules"} )
+        purge_before_symlink( %w{log tmp/pids public/system node_modules} )        
+      else
+        symlinks( deploy[:symlinks] )
+        purge_before_symlink( deploy[:purge_before_symlink] )
+      end
+
+
       action deploy[:action]
 
       if deploy[:application_type] == 'rails'
