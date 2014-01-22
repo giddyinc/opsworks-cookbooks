@@ -71,10 +71,9 @@ node[:deploy].each do |application, deploy|
   # nodejs
   default[:deploy][application][:nodejs][:restart_command] = "monit restart node_web_app_#{application}"
   default[:deploy][application][:nodejs][:stop_command] = "monit stop node_web_app_#{application}"
-  if deploy[:application_type] == 'nodejs'  
-    default[:deploy][application][:purge_before_symlink] = %w{log tmp/pids public/system node_modules}
-    default[:deploy][application][:symlinks] = {"system" => "public/system", "pids" => "tmp/pids", "log" => "log", "node_modules" => "node_modules"}
-  end
+  default[:deploy][application][:purge_before_symlink] = %w{log tmp/pids public/system node_modules}
+  default[:deploy][application][:symlinks] = {"system" => "public/system", "pids" => "tmp/pids", "log" => "log", "node_modules" => "node_modules"}
+
 end
 
 default[:opsworks][:skip_uninstall_of_other_rails_stack] = false
