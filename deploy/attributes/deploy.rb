@@ -17,6 +17,9 @@ default[:opsworks][:rails][:ignore_bundler_groups] = ['test', 'development']
 
 default[:deploy] = {}
 node[:deploy].each do |application, deploy|
+  default[:deploy][application][:purge_before_symlink] = %w{log tmp/pids public/system node_modules}
+  default[:deploy][application][:symlinks] = {"system" => "public/system", "pids" => "tmp/pids", "log" => "log", "node_modules" => "node_modules"}
+  Chef::Log.debug("setting symlinks: #{node[:deploy][application][:symlinks]}")  
   default[:deploy][application][:deploy_to] = "/srv/www/#{application}"
   default[:deploy][application][:current_path] = "#{node[:deploy][application][:deploy_to]}/current"
   default[:deploy][application][:document_root] = ''
@@ -71,9 +74,7 @@ node[:deploy].each do |application, deploy|
   # nodejs
   default[:deploy][application][:nodejs][:restart_command] = "monit restart node_web_app_#{application}"
   default[:deploy][application][:nodejs][:stop_command] = "monit stop node_web_app_#{application}"
-  default[:deploy][application][:purge_before_symlink] = %w{log tmp/pids public/system node_modules}
-  default[:deploy][application][:symlinks] = {"system" => "public/system", "pids" => "tmp/pids", "log" => "log", "node_modules" => "node_modules"}
-  Chef::Log.debug("setting symlinks: #{node[:deploy][application][:symlinks]}")
+
 
 end
 
