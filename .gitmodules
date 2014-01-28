@@ -19,3 +19,6 @@
 [submodule "dropwizard"]
 	path = dropwizard
 	url = https://github.com/greglu/dropwizard-cookbook.git
+[submodule "apt"]
+	path = apt
+	url = https://github.com/opscode-cookbooks/apt.git
