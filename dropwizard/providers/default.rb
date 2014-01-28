@@ -100,16 +100,16 @@ action :install do
       mode 0644
       owner 'root'
       group 'root'
-      variables(
-        app_name: app_name,
-        java_bin: get_java_path(new_resource),
-        app_path: app_path,
-        app_user: app_user,
-        pid_file: pid_file,
-        jar_file: jar_file,
-        jvm_options: new_resource.jvm_options,
-        arguments: new_resource.arguments
-      )
+      variables({
+        :app_name => app_name,
+        :java_bin => get_java_path(new_resource),
+        :app_path => app_path,
+        :app_user => app_user,
+        :pid_file => pid_file,
+        :jar_file => jar_file,
+        :jvm_options => new_resource.jvm_options,
+        :arguments => new_resource.arguments
+      })
       notifies :restart, "service[#{app_name}]" if jar_exists
     end
 
@@ -129,7 +129,7 @@ action :install do
     service app_name do
       provider Chef::Provider::Service::Upstart
 
-      supports restart: false, status: true
+      supports :restart => false, :status => true
 
       # Only start the service if the JAR is deployed to this server
       action(jar_exists ? [:enable, :start] : :nothing)
