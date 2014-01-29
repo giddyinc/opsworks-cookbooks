@@ -8,7 +8,6 @@ node[:deploy].each do |application, deploy|
 
   include_recipe 'opsworks_dw::fetch_s3_files'
 
-  Chef::Log.debug("Restarting dw service")
   service 'dw' do
     action :restart
   end
