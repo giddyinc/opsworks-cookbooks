@@ -5,3 +5,4 @@ description       'Installs and configures a Java server for running dropwizard 
 version           '0.1'
 
 depends           'dropwizard'
+depends           's3_file'
