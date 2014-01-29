@@ -23,6 +23,6 @@ if node["opsworks"].has_key?("ruby_stack")
   end
 end
 
-include_attribute "opsworks_nodejs::opsworks_nodejs" if node["opsworks"].has_key?("instance") &&
-                                                        node["opsworks"]["instance"].has_key?("layers") &&
-                                                        node["opsworks"]["instance"]["layers"].include?("nodejs-app")
+#include_attribute "opsworks_nodejs::opsworks_nodejs" if node["opsworks"].has_key?("instance") &&
+#                                                        node["opsworks"]["instance"].has_key?("layers") &&
+#                                                        node["opsworks"]["instance"]["layers"].include?("nodejs-app")
