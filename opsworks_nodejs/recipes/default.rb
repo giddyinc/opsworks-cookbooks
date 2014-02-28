@@ -63,6 +63,12 @@ when 'centos','redhat','fedora','amazon'
 
 end
 
+execute 'npm config set ca ""' do
+end
+
+execute 'npm install npm -g' do
+end
+
 execute "Clean up nodejs files" do
   cwd "/tmp"
   command "rm -f #{node[:opsworks_nodejs][:rpm]} #{node[:opsworks_nodejs][:deb]}"
