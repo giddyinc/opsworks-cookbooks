@@ -12,4 +12,14 @@ node[:deploy].each do |application, deploy|
     action :restart
   end
 
+  template "/etc/logrotate.d/opsworks_app_#{application}" do
+    backup false
+    source "logrotate-dw.erb"
+    cookbook 'deploy'
+    owner "root"
+    group "root"
+    mode 0644
+    variables( :log_file => "/var/log/dw.log" )
+  end
+
 end
