@@ -24,6 +24,20 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
     app application
   end
+  
+  #do some bower install and grunt release
+  # execute "bower install" do
+  #   command "#{node[:deploy][application][:deploy_to]}/current/bower install"
+  # end
+  
+  # execute "grunt release" do
+  #   command "#{node[:deploy][application][:deploy_to]}/current/grunt release"
+  # end
+  
+  execute "bower install" do
+    cwd "#{node[:deploy][application][:deploy_to]}/current"
+  end
+  
 
   ruby_block "restart node.js application #{application}" do
     block do
