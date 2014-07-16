@@ -36,13 +36,13 @@ node[:deploy].each do |application, deploy|
   
   execute "bower install" do
     cwd "#{node[:deploy][application][:deploy_to]}/current"
-    owner deploy[:user]
+    user deploy[:user]
     group deploy[:group]
   end
   
   execute "grunt release" do
     cwd "#{node[:deploy][application][:deploy_to]}/current"
-    owner deploy[:user]
+    user deploy[:user]
     group deploy[:group]
   end
   
