@@ -25,19 +25,10 @@ node[:deploy].each do |application, deploy|
     app application
   end
   
-  #do some bower install and grunt release
-  # execute "bower install" do
-  #   command "#{node[:deploy][application][:deploy_to]}/current/bower install"
-  # end
   
-  # execute "grunt release" do
-  #   command "#{node[:deploy][application][:deploy_to]}/current/grunt release"
-  # end
-  
-  execute "bower install" do
+  #some reason bower install won't work under deploy user
+  execute "bower install --allow-root" do
     cwd "#{node[:deploy][application][:deploy_to]}/current"
-    user deploy[:user]
-    group deploy[:group]
   end
   
   execute "grunt release" do
