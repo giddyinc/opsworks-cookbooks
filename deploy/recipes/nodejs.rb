@@ -25,18 +25,30 @@ node[:deploy].each do |application, deploy|
     app application
   end
   
-  
-  #some reason bower install won't work under deploy user
-  execute "bower install --allow-root" do
-    cwd "#{node[:deploy][application][:deploy_to]}/current"
+  bower_json_dir = "#{node[:deploy][application][:deploy_to]}/current"
+  unless node[:bower_json_subdir].nil?
+    bower_json_dir = "#{bower_json_dir}/#{node[:bower_json_subdir]}"
   end
-  
-  execute "grunt release" do
-    cwd "#{node[:deploy][application][:deploy_to]}/current"
-    user deploy[:user]
-    group deploy[:group]
+
+  if File.exists?("#{bower_json_dir}/bower.json")
+    #some reason bower install won't work under deploy user
+    execute "bower install --allow-root" do
+      cwd "#{bower_json_dir}"
+    end
   end
-  
+
+  gruntfile_dir = "#{node[:deploy][application][:deploy_to]}/current"
+  unless node[:gruntfile_subdir].nil?
+    gruntfile_dir = "#{gruntfile_dir}/#{node[:gruntfile_subdir]}"
+  end
+
+  if File.exists?("#{gruntfile_dir}/Gruntfile.js")
+    execute "grunt release" do
+      cwd "#{gruntfile_dir}"
+      user deploy[:user]
+      group deploy[:group]
+    end
+  end
 
   ruby_block "restart node.js application #{application}" do
     block do
