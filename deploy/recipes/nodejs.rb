@@ -24,6 +24,19 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
     app application
   end
+  
+  
+  #some reason bower install won't work under deploy user
+  execute "bower install --allow-root" do
+    cwd "#{node[:deploy][application][:deploy_to]}/current"
+  end
+  
+  execute "grunt release" do
+    cwd "#{node[:deploy][application][:deploy_to]}/current"
+    user deploy[:user]
+    group deploy[:group]
+  end
+  
 
   ruby_block "restart node.js application #{application}" do
     block do
