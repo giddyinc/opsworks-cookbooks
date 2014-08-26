@@ -24,37 +24,31 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
     app application
   end
-  
+
   bower_json_dir = "#{node[:deploy][application][:deploy_to]}/current"
   unless node[:bower_json_subdir].nil?
-    bower_json_dir = "#{bower_json_dir}/#{node[:bower_json_subdir]}"
+      bower_json_dir = "#{bower_json_dir}/#{node[:bower_json_subdir]}"
   end
 
-  Chef::Log.info("Looking for bower.json in #{bower_json_dir}")
-  if File.exists?("#{bower_json_dir}/bower.json")
-    Chef::Log.info("bower.json detected. Running bower install.")
-    #some reason bower install won't work under deploy user
-    execute "bower install --allow-root" do
-      cwd "#{bower_json_dir}"
+  execute "bower install --allow-root" do
+    cwd "#{bower_json_dir}"
+    only_if do
+      File.exists?("#{bower_json_dir}/bower.json")
     end
-  else
-    Chef::Log.info("No bower.json found in #{bower_json_dir}")
   end
 
   gruntfile_dir = "#{node[:deploy][application][:deploy_to]}/current"
   unless node[:gruntfile_subdir].nil?
     gruntfile_dir = "#{gruntfile_dir}/#{node[:gruntfile_subdir]}"
   end
-
-  if File.exists?("#{gruntfile_dir}/Gruntfile.js")
-    Chef::Log.info("Gruntfile.js detected. Running grunt release.")
-    execute "grunt release" do
-      cwd "#{gruntfile_dir}"
-      user deploy[:user]
-      group deploy[:group]
+  
+  execute "grunt release" do
+    cwd "#{gruntfile_dir}"
+    user deploy[:user]
+    group deploy[:group]
+    only_if do
+      File.exists?("#{gruntfile_dir}/Gruntfile.js")
     end
-  else
-    Chef::Log.info("No Gruntfile.js found in #{gruntfile_dir}")
   end
 
   ruby_block "restart node.js application #{application}" do
