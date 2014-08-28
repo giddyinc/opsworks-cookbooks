@@ -31,11 +31,20 @@ node[:deploy].each do |application, deploy|
     cwd "#{node[:deploy][application][:deploy_to]}/current"
   end
   
-  execute "grunt release" do
-    cwd "#{node[:deploy][application][:deploy_to]}/current"
-    user deploy[:user]
-    group deploy[:group]
+  if "#{node[:nodejs_env]}" == "prod"
+    execute "grunt release-prod" do
+      cwd "#{node[:deploy][application][:deploy_to]}/current"
+      user deploy[:user]
+      group deploy[:group]
+    end
+  else
+    execute "grunt release" do
+      cwd "#{node[:deploy][application][:deploy_to]}/current"
+      user deploy[:user]
+      group deploy[:group]
+    end
   end
+
   
 
   ruby_block "restart node.js application #{application}" do
