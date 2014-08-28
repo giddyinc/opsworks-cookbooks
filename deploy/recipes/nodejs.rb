@@ -38,7 +38,7 @@ node[:deploy].each do |application, deploy|
       group deploy[:group]
     end
   else
-    execute "grunt release" do
+    execute "grunt release-staging" do
       cwd "#{node[:deploy][application][:deploy_to]}/current"
       user deploy[:user]
       group deploy[:group]
