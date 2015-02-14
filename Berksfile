@@ -1,3 +1,3 @@
 source "https://supermarket.getchef.com"
 
-cookbook 'thumbor', '~> 0.4.1'
+cookbook 'thumbor_ng', '~> 0.2.8'
