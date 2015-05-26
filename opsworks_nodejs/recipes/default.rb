@@ -16,7 +16,7 @@ when 'debian', 'ubuntu'
     end
   end
 
-  ['opsworks-nodejs','nodejs'].each do |pkg|
+  ['opsworks-nodejs','nodejs','node'].each do |pkg|
     execute "Remove old node.js versions due to update" do
       command "dpkg --purge #{pkg}"
       only_if do
