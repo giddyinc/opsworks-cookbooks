@@ -69,6 +69,8 @@ end
 execute 'npm install npm -g' do
 end
 
+package 'libfontconfig'
+
 execute "Clean up nodejs files" do
   cwd "/tmp"
   command "rm -f #{node[:opsworks_nodejs][:rpm]} #{node[:opsworks_nodejs][:deb]}"
