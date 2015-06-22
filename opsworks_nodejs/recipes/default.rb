@@ -71,6 +71,10 @@ end
 
 package 'libfontconfig'
 
+link "/usr/bin/node" do
+  to "/usr/local/bin/node"
+end
+
 execute "Clean up nodejs files" do
   cwd "/tmp"
   command "rm -f #{node[:opsworks_nodejs][:rpm]} #{node[:opsworks_nodejs][:deb]}"
