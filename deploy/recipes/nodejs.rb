@@ -1,10 +1,19 @@
 include_recipe 'deploy'
 include_recipe 'java'
+include_recipe 'magic_shell'
 
 node[:deploy].each do |application, deploy|
   if deploy[:application_type] != 'nodejs'
     Chef::Log.debug("Skipping deploy::nodejs for application #{application} as it is not a node.js app")
     next
+  end
+
+  magic_shell_environment 'AWS_ACCESS_KEY_ID' do
+    value node[:aws_access_key_id]
+  end
+
+  magic_shell_environment 'AWS_SECRET_ACCESS_KEY' do
+    value node[:aws_secret_access_key]
   end
 
   opsworks_deploy_dir do
