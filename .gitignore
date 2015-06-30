@@ -18,3 +18,7 @@ _yardoc
 doc/
 
 .DS_Store
+
+.idea/*
+*.kitchen*
+*chefignore
