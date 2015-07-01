@@ -6,4 +6,4 @@ version     "1.0.0"
 
 depends 'deploy'
 depends 'opsworks_commons'
-depends "magic_shell"
+depends 'magic_shell'
