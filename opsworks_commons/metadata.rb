@@ -4,3 +4,4 @@ description "Common recipes and libraries"
 version "0.1"
 
 depends "dependencies"
+depends "magic_shell"
