@@ -7,14 +7,6 @@ node[:deploy].each do |application, deploy|
     next
   end
 
-  magic_shell_environment 'AWS_ACCESS_KEY_ID' do
-    value node[:aws_access_key_id]
-  end
-
-  magic_shell_environment 'AWS_SECRET_ACCESS_KEY' do
-    value node[:aws_secret_access_key]
-  end
-
   opsworks_deploy_dir do
     user deploy[:user]
     group deploy[:group]
