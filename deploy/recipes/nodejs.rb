@@ -1,5 +1,6 @@
 include_recipe 'deploy'
 include_recipe 'java'
+include_recipe 'magic_shell'
 
 node[:deploy].each do |application, deploy|
   if deploy[:application_type] != 'nodejs'
