@@ -7,6 +7,7 @@ depends "ruby_enterprise"
 depends "ruby"
 depends "gem_support"
 depends "packages"
+depends "magic_shell"
 
 attribute "dependencies/gems",
   :display_name => "Gems to install",
