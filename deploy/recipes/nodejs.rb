@@ -31,7 +31,7 @@ node[:deploy].each do |application, deploy|
     cwd "#{node[:deploy][application][:deploy_to]}/current"
   end
   
-  if "#{node[:nodejs_env]}" == "prod"
+  if "#{node[:nodejs_env]}" == "prod" || "#{node[:nodejs_env]}" == "production"
     execute "grunt release-prod" do
       cwd "#{node[:deploy][application][:deploy_to]}/current"
       user deploy[:user]
