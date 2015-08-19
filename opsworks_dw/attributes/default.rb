@@ -11,6 +11,8 @@ default[:dw][:user] = 'root'
 default[:dw][:path] = '/opt/dw'
 default[:dw][:s3_bucket] = 'boxed-maven'
 
+default[:dw][:jvm_options] = '-Xms512M -Xmx1024M'
+
 # jar
 default[:dw][:app_name] = ''
 default[:dw][:app_version] = '0.0.1'
