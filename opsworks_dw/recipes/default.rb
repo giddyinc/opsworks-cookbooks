@@ -11,6 +11,7 @@ dropwizard 'dw' do
   arguments "server #{node[:dw][:config_local_file]}"
   jar_file node[:dw][:jar_local_file]
   user node[:dw][:user]
+  jvm_options node[:dw][:jvm_options]
 end
 
 service 'dw' do
