@@ -32,13 +32,13 @@ node[:deploy].each do |application, deploy|
   end
   
   if "#{node[:nodejs_env]}" == "prod" || "#{node[:nodejs_env]}" == "production"
-    execute "grunt release-prod" do
+    execute "npm run release-prod" do
       cwd "#{node[:deploy][application][:deploy_to]}/current"
       user deploy[:user]
       group deploy[:group]
     end
   else
-    execute "grunt release-staging" do
+    execute "npm run release-staging" do
       cwd "#{node[:deploy][application][:deploy_to]}/current"
       user deploy[:user]
       group deploy[:group]
