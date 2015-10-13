@@ -63,12 +63,6 @@ when 'centos','redhat','fedora','amazon'
 
 end
 
-execute 'npm config set ca ""' do
-end
-
-execute 'npm install npm -g' do
-end
-
 package 'libfontconfig'
 
 link "/usr/bin/node" do
