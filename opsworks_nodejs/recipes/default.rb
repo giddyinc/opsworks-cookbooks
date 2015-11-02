@@ -67,3 +67,9 @@ execute "Clean up nodejs files" do
   cwd "/tmp"
   command "rm -f #{node[:opsworks_nodejs][:rpm]} #{node[:opsworks_nodejs][:deb]}"
 end
+
+execute "Clean up tmp npm files" do
+  cwd "/tmp"
+  command "find /tmp/ -type d -cmin +1440 -name 'npm-*' | xargs rm -rf"
+end
+
