@@ -32,8 +32,8 @@ define :opsworks_nodejs do
   end
 
   node_opts = ""
-  unless node[:max_old_space_size_in_mb].nil?
-    node_opts += " --max_old_space_size #{node[:max_old_space_size_in_mb]}"
+  unless node[:node_opts].nil?
+    node_opts += "#{node[:node_opts]}"
   end
 
   template "#{node.default[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
