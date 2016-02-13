@@ -31,6 +31,11 @@ define :opsworks_nodejs do
     app_main = "#{node[:app_main]}"
   end
 
+  node_opts = ""
+  unless node[:max_old_space_size_in_mb].nil?
+    node_opts += " --max_old_space_size #{node[:max_old_space_size_in_mb]}"
+  end
+
   template "#{node.default[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
     source 'node_web_app.monitrc.erb'
     cookbook 'opsworks_nodejs'
@@ -41,6 +46,7 @@ define :opsworks_nodejs do
       :deploy => deploy,
       :application_name => application,
       :monitored_script => "#{deploy[:deploy_to]}/current/#{app_main}",
+      :node_opts => "#{node_opts}",
       :nodejs_env => nodejs_env
     )
     notifies :restart, resources(:service => 'monit'), :immediately
