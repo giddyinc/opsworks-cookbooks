@@ -53,7 +53,8 @@ end
 
 ruby_block "ensure only our passenger version is installed by deinstalling any other version" do
   block do
-    ensure_only_gem_version('passenger', node[:passenger][:version])
+    ensure_only_gem_version("rack", node[:passenger][:rack_version])
+    ensure_only_gem_version("passenger", node[:passenger][:version])
   end
 end
 
@@ -61,4 +62,13 @@ execute "passenger_module" do
   command 'passenger-install-apache2-module -a'
   creates node[:passenger][:module_path]
   notifies :restart, "service[apache2]"
+end
+
+bash "Enable selinux httpd_t for passenger" do
+  user "root"
+  code <<-EOH
+    semanage permissive -a httpd_t
+  EOH
+  not_if { OpsWorks::ShellOut.shellout("/usr/sbin/semanage permissive -l") =~ /httpd_t/ }
+  only_if { platform_family?("rhel") && ::File.exist?("/usr/sbin/getenforce") && OpsWorks::ShellOut.shellout("/usr/sbin/getenforce").strip == "Enforcing" }
 end
