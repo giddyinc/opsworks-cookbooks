@@ -48,5 +48,4 @@ bash 'bundle certificate' do
   code <<-EOH
     cat {#{sf_bundle_path},#{loggly_crt_path}} > loggly_full.crt
   EOH
-  not_if { ::File.exists?("#{node['loggly']['tls']['cert_path']}/loggly_full.crt") }
 end
